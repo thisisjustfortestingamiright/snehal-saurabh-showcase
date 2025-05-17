@@ -1,8 +1,26 @@
 
-import { Github, Linkedin, Mail, Home, Moon, Sun, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, Home, Moon, Sun } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+
+// Custom X icon (Twitter/X) component
+const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={props.width || 24}
+    height={props.height || 24}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M 4,4 L 20,20 M 20,4 L 4,20" />
+  </svg>
+);
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -43,7 +61,7 @@ const Navbar = () => {
             <Linkedin size={20} />
           </a>
           <a href="https://x.com/snehalsaurabh" target="_blank" rel="noopener noreferrer" className="nav-link">
-            <ExternalLink size={20} />
+            <XIcon width={20} height={20} />
           </a>
           <a href="mailto:contact@snehalsaurabh.com" className="nav-link">
             <Mail size={20} />

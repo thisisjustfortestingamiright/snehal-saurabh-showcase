@@ -5,6 +5,7 @@ import ExperienceSection from "../components/ExperienceSection";
 import ProjectsSection from "../components/ProjectsSection";
 import CompetitiveProgrammingSection from "../components/CompetitiveProgrammingSection";
 import PhotoCollageSection from "../components/PhotoCollageSection";
+import HackathonWinsSection from "../components/HackathonWinsSection";
 import Footer from "../components/Footer";
 
 const Index = () => {
@@ -15,6 +16,7 @@ const Index = () => {
         <AboutSection />
         <ExperienceSection />
         <ProjectsSection />
+        <HackathonWinsSection />
         <CompetitiveProgrammingSection />
         <PhotoCollageSection />
       </main>
