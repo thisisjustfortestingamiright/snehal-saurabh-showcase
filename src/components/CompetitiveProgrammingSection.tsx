@@ -1,53 +1,43 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-type PlatformRating = {
-  platform: string;
-  handle: string;
-  rating: number;
-  rank?: string;
-  color: string;
-  maxRating?: number;
-  logo: string;
-  url: string;
-};
-
-const ratings: PlatformRating[] = [
+const platforms = [
   {
-    platform: "LeetCode",
-    handle: "snehalsaurabh",
-    rating: 2145,
-    rank: "Guardian",
-    color: "#FFA116",
-    logo: "https://leetcode.com/static/images/LeetCode_logo_rvs.png",
-    url: "https://leetcode.com/snehalsaurabh/",
+    name: "LeetCode",
+    username: "snehalsaurabh",
+    rating: "2000+",
+    contests: "50+",
+    problems: "800+",
+    profile: "https://leetcode.com/snehalsaurabh/",
+    logo: "https://leetcode.com/_next/static/images/logo-dark-c96c407d175e36c81e236fcfdd682a0b.png"
   },
   {
-    platform: "CodeForces",
-    handle: "snehalsaurabh",
-    rating: 1823,
-    rank: "Expert",
-    color: "#3B67BD",
-    logo: "https://codeforces.org/s/0/images/codeforces-sponsored-by-ton.png",
-    url: "https://codeforces.com/profile/snehalsaurabh",
+    name: "Codeforces",
+    username: "snehalsaurabh",
+    rating: "Specialist (1500+)",
+    contests: "45+",
+    problems: "700+",
+    profile: "https://codeforces.com/profile/snehalsaurabh",
+    logo: "https://codeforces.org/s/0/apple-icon-180x180.png"
   },
   {
-    platform: "AtCoder",
-    handle: "snehalS",
-    rating: 1532,
-    color: "#00C19A",
-    logo: "https://img.atcoder.jp/assets/top/img/logo_bk.svg",
-    url: "https://atcoder.jp/users/snehalS",
+    name: "AtCoder",
+    username: "snehalsaurabh",
+    rating: "Green (800+)",
+    contests: "30+",
+    problems: "300+",
+    profile: "https://atcoder.jp/users/snehalsaurabh",
+    logo: "https://img.atcoder.jp/assets/atcoder.png"
   },
   {
-    platform: "CodeChef",
-    handle: "snehal_saurabh",
-    rating: 1932,
-    color: "#745648",
-    rank: "5★",
-    logo: "https://cdn.codechef.com/images/cc-logo.svg",
-    url: "https://www.codechef.com/users/snehal_saurabh",
-  },
+    name: "CodeChef",
+    username: "snehalsaurabh",
+    rating: "4★ (1800+)",
+    contests: "40+",
+    problems: "400+",
+    profile: "https://www.codechef.com/users/snehalsaurabh",
+    logo: "https://cdn.codechef.com/sites/default/files/uploads/pictures/811b20a47eac52b10c90ab82e0628e21.png"
+  }
 ];
 
 const CompetitiveProgrammingSection = () => {
@@ -89,55 +79,46 @@ const CompetitiveProgrammingSection = () => {
       <div className="container max-w-4xl mx-auto">
         <h2 className="section-heading">Competitive Programming</h2>
         <p className="text-lg mb-8">
-          I regularly participate in programming contests across different platforms to sharpen my problem-solving skills and algorithmic thinking.
+          Passionate about algorithmic problem-solving across multiple competitive programming platforms.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {ratings.map((platform, index) => (
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {platforms.map((platform, index) => (
             <a 
-              key={platform.platform}
-              href={platform.url}
+              key={platform.name}
+              href={platform.profile}
               target="_blank"
               rel="noopener noreferrer"
-              className="block transition-transform hover:-translate-y-1 duration-200"
+              className="group"
+              style={{ animationDelay: `${index * 150}ms` }}
             >
-              <div 
-                className="bg-card border border-border p-6 rounded-lg animate-fade-in"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 flex items-center justify-center overflow-hidden">
-                      <img 
-                        src={platform.logo} 
-                        alt={`${platform.platform} logo`} 
-                        className="max-w-full max-h-full object-contain"
-                      />
-                    </div>
-                    <h3 className="text-xl font-semibold">{platform.platform}</h3>
+              <div className="h-full flex flex-col bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 animate-fade-in">
+                <div className="p-6 flex justify-between items-start">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-1 group-hover:text-primary transition-colors">{platform.name}</h3>
+                    <p className="text-muted-foreground mb-4">@{platform.username}</p>
                   </div>
-                  {platform.rank && (
-                    <span 
-                      className="px-3 py-1 rounded-full text-sm font-medium" 
-                      style={{ backgroundColor: `${platform.color}30`, color: platform.color }}
-                    >
-                      {platform.rank}
-                    </span>
+                  {platform.logo && (
+                    <img 
+                      src={platform.logo} 
+                      alt={`${platform.name} logo`}
+                      className="h-10 w-10 object-contain"
+                    />
                   )}
                 </div>
-                <p className="text-muted-foreground mb-2">@{platform.handle}</p>
-                <div className="mt-4">
-                  <div className="flex justify-between mb-2">
-                    <span>Rating</span>
-                    <span className="font-semibold" style={{ color: platform.color }}>{platform.rating}</span>
+                
+                <div className="grid grid-cols-3 divide-x divide-border border-t border-border">
+                  <div className="p-4 text-center">
+                    <p className="text-sm text-muted-foreground">Rating</p>
+                    <p className="font-medium">{platform.rating}</p>
                   </div>
-                  <div className="w-full bg-secondary rounded-full h-2">
-                    <div 
-                      className="h-2 rounded-full" 
-                      style={{ 
-                        width: `${Math.min(100, (platform.rating / 3000) * 100)}%`,
-                        backgroundColor: platform.color 
-                      }}
-                    ></div>
+                  <div className="p-4 text-center">
+                    <p className="text-sm text-muted-foreground">Contests</p>
+                    <p className="font-medium">{platform.contests}</p>
+                  </div>
+                  <div className="p-4 text-center">
+                    <p className="text-sm text-muted-foreground">Problems</p>
+                    <p className="font-medium">{platform.problems}</p>
                   </div>
                 </div>
               </div>

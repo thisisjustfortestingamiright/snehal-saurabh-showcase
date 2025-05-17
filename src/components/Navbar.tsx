@@ -4,7 +4,7 @@ import { useTheme } from './ThemeProvider';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-// Custom X icon (Twitter/X) component
+// Improved X icon (Twitter/X) component
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +18,7 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
     strokeLinejoin="round"
     {...props}
   >
-    <path d="M 4,4 L 20,20 M 20,4 L 4,20" />
+    <path d="M16.99 2H21l-6.99 9.938V21h-4.018v-9.062L3 2h4.018l4.988 7.138L16.99 2z" />
   </svg>
 );
 

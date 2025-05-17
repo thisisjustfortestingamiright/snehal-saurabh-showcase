@@ -4,6 +4,13 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Github, ExternalLink } from 'lucide-react';
 import { Project } from '../components/ProjectsSection';
 import NotFound from './NotFound';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 // Using the same projects data that we defined in ProjectsSection
 const projects: Project[] = [
@@ -37,8 +44,13 @@ const projects: Project[] = [
   },
 ];
 
-// Extended descriptions for each project
-const projectDetails: Record<string, { fullDescription: string, githubUrl: string, demoUrl: string }> = {
+// Extended descriptions and images for each project
+const projectDetails: Record<string, { 
+  fullDescription: string, 
+  githubUrl: string, 
+  demoUrl: string,
+  images: string[] 
+}> = {
   "distributed-cache": {
     fullDescription: `
       A high-performance distributed caching system built using Go. The system supports multiple eviction policies 
@@ -55,6 +67,11 @@ const projectDetails: Record<string, { fullDescription: string, githubUrl: strin
     `,
     githubUrl: "https://github.com/snehalsaurabh/distributed-cache",
     demoUrl: "https://demo.snehalsaurabh.com/distributed-cache",
+    images: [
+      "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   "ml-workflow-engine": {
     fullDescription: `
@@ -73,6 +90,11 @@ const projectDetails: Record<string, { fullDescription: string, githubUrl: strin
     `,
     githubUrl: "https://github.com/snehalsaurabh/ml-workflow-engine",
     demoUrl: "https://demo.snehalsaurabh.com/ml-workflow",
+    images: [
+      "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   "api-gateway": {
     fullDescription: `
@@ -91,6 +113,11 @@ const projectDetails: Record<string, { fullDescription: string, githubUrl: strin
     `,
     githubUrl: "https://github.com/snehalsaurabh/api-gateway",
     demoUrl: "https://demo.snehalsaurabh.com/api-gateway",
+    images: [
+      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   "stock-analysis": {
     fullDescription: `
@@ -109,6 +136,11 @@ const projectDetails: Record<string, { fullDescription: string, githubUrl: strin
     `,
     githubUrl: "https://github.com/snehalsaurabh/stock-analysis",
     demoUrl: "https://demo.snehalsaurabh.com/stock-analysis",
+    images: [
+      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
 };
 
@@ -143,12 +175,24 @@ const ProjectDetail = () => {
         </Link>
         
         <div className="space-y-8">
-          <div className="aspect-video w-full overflow-hidden rounded-lg border border-border">
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="w-full h-full object-cover"
-            />
+          <div className="mb-6">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {details.images.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="aspect-video w-full overflow-hidden rounded-lg border border-border">
+                      <img 
+                        src={image}
+                        alt={`${project.title} - image ${index + 1}`} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
           </div>
           
           <h1 className="text-3xl md:text-4xl font-bold">{project.title}</h1>

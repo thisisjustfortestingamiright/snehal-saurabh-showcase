@@ -1,10 +1,10 @@
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { ArrowRight, Trophy } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
+import { Badge } from "../components/ui/badge";
+import { Button } from "../components/ui/button";
+import { ArrowLeft, Trophy } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -13,19 +13,20 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-type HackathonWin = {
+type HackathonInfo = {
   id: string;
   title: string;
   description: string;
   date: string;
-  prize: string;
+  prize?: string;
   organizer: string;
   venue: string;
+  isWinner: boolean;
   techStack: string[];
   images: string[];
 };
 
-const hackathonWins: HackathonWin[] = [
+const hackathons: HackathonInfo[] = [
   {
     id: "smart-city-hack",
     title: "Smart City Hackathon",
@@ -34,6 +35,7 @@ const hackathonWins: HackathonWin[] = [
     prize: "$5,000",
     organizer: "TechCity Foundation",
     venue: "San Francisco Convention Center",
+    isWinner: true,
     techStack: ["Python", "Raspberry Pi", "TensorFlow", "AWS"],
     images: [
       "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=1000&q=80",
@@ -49,6 +51,7 @@ const hackathonWins: HackathonWin[] = [
     prize: "$3,500",
     organizer: "DeFi Alliance",
     venue: "New York University, Tech Building",
+    isWinner: true,
     techStack: ["Solidity", "React", "Ethereum", "Web3.js"],
     images: [
       "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1000&q=80",
@@ -64,6 +67,7 @@ const hackathonWins: HackathonWin[] = [
     prize: "$7,500",
     organizer: "MedTech Innovators",
     venue: "Boston Medical Center",
+    isWinner: true,
     techStack: ["Python", "PyTorch", "Flask", "Google Cloud"],
     images: [
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=80",
@@ -79,71 +83,67 @@ const hackathonWins: HackathonWin[] = [
     prize: "$4,000",
     organizer: "EcoTech Foundation",
     venue: "Berlin TechHub",
+    isWinner: true,
     techStack: ["React Native", "Node.js", "MongoDB", "Firebase"],
     images: [
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=80"
     ]
+  },
+  {
+    id: "education-hackathon",
+    title: "EdTech Innovation Challenge",
+    description: "Built an adaptive learning platform that customizes educational content based on individual learning styles and progress. The platform uses machine learning to identify knowledge gaps and recommend resources.",
+    date: "February 2023",
+    organizer: "Global Education Initiative",
+    venue: "University of California, Berkeley",
+    isWinner: false,
+    techStack: ["Python", "React", "TensorFlow", "AWS"],
+    images: [
+      "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1000&q=80"
+    ]
+  },
+  {
+    id: "space-data-challenge",
+    title: "Space Data Visualization Challenge",
+    description: "Created an interactive visualization tool for analyzing satellite imagery and space data. Our solution helps researchers identify patterns and anomalies in large datasets from space observations.",
+    date: "October 2022",
+    organizer: "Space Research Institute",
+    venue: "Virtual Event",
+    isWinner: false,
+    techStack: ["JavaScript", "D3.js", "WebGL", "Python"],
+    images: [
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=1000&q=80"
+    ]
   }
 ];
 
-const HackathonWinsSection = () => {
-  const [selectedHackathon, setSelectedHackathon] = useState<HackathonWin | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.1,
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
+const AllHackathons = () => {
+  const [selectedHackathon, setSelectedHackathon] = useState<HackathonInfo | null>(null);
 
   return (
-    <section
-      id="hackathon-wins"
-      ref={sectionRef}
-      className={`transition-opacity duration-1000 ease-in-out ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
-    >
-      <div className="container max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="section-heading mb-0">Hackathon Wins</h2>
-          <Link to="/hackathons">
-            <Button variant="outline" className="flex items-center gap-2">
-              View All Hackathons
-              <ArrowRight size={16} />
-            </Button>
-          </Link>
-        </div>
-        <p className="text-lg mb-8">
-          Showcasing innovative solutions developed during intense coding competitions.
-        </p>
-
+    <div className="min-h-screen pt-12 pb-24">
+      <div className="container max-w-4xl mx-auto px-6">
+        <Link 
+          to="/" 
+          className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors mb-8"
+        >
+          <ArrowLeft size={16} className="mr-2" />
+          Back to Home
+        </Link>
+        
+        <h1 className="text-3xl md:text-4xl font-bold mb-8">Hackathon Experience</h1>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {hackathonWins.map((hackathon, index) => (
+          {hackathons.map((hackathon, index) => (
             <div
               key={hackathon.id}
-              className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 animate-fade-in cursor-pointer"
+              className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 animate-fade-in"
               style={{ animationDelay: `${index * 150}ms` }}
               onClick={() => setSelectedHackathon(hackathon)}
             >
@@ -153,11 +153,13 @@ const HackathonWinsSection = () => {
                   alt={hackathon.title} 
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute top-4 right-4">
-                  <Badge className="bg-primary/90 hover:bg-primary">
-                    <Trophy size={14} className="mr-1" /> Winner
-                  </Badge>
-                </div>
+                {hackathon.isWinner && (
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-primary/90 hover:bg-primary">
+                      <Trophy size={14} className="mr-1" /> Winner
+                    </Badge>
+                  </div>
+                )}
               </div>
               
               <div className="p-6">
@@ -169,7 +171,11 @@ const HackathonWinsSection = () => {
                   {hackathon.description}
                 </p>
                 <div className="flex justify-between items-center">
-                  <span className="font-medium text-primary">{hackathon.prize}</span>
+                  {hackathon.prize ? (
+                    <span className="font-medium text-primary">{hackathon.prize}</span>
+                  ) : (
+                    <span className="font-medium text-muted-foreground">Participant</span>
+                  )}
                   <Button 
                     variant="outline" 
                     size="sm" 
@@ -230,10 +236,12 @@ const HackathonWinsSection = () => {
                   <p>{selectedHackathon.date}</p>
                 </div>
                 
-                <div>
-                  <h4 className="text-sm font-medium text-muted-foreground">Prize</h4>
-                  <p className="text-primary font-medium">{selectedHackathon.prize}</p>
-                </div>
+                {selectedHackathon.prize && (
+                  <div>
+                    <h4 className="text-sm font-medium text-muted-foreground">Prize</h4>
+                    <p className="text-primary font-medium">{selectedHackathon.prize}</p>
+                  </div>
+                )}
                 
                 <div>
                   <h4 className="text-sm font-medium text-muted-foreground">Description</h4>
@@ -253,8 +261,8 @@ const HackathonWinsSection = () => {
           )}
         </Dialog>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default HackathonWinsSection;
+export default AllHackathons;

@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import AboutSection from "../components/AboutSection";
 import ExperienceSection from "../components/ExperienceSection";
 import ProjectsSection from "../components/ProjectsSection";
+import SkillsSection from "../components/SkillsSection";
 import CompetitiveProgrammingSection from "../components/CompetitiveProgrammingSection";
 import PhotoCollageSection from "../components/PhotoCollageSection";
 import HackathonWinsSection from "../components/HackathonWinsSection";
@@ -15,6 +16,7 @@ const Index = () => {
       <main>
         <AboutSection />
         <ExperienceSection />
+        <SkillsSection />
         <ProjectsSection />
         <HackathonWinsSection />
         <CompetitiveProgrammingSection />
