@@ -6,7 +6,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Badge } from "./ui/badge";
-import { Code, Database, FileCode, Flask, Layers, Pen } from "lucide-react";
+import { Code, Database, FileCode, FlaskConical, Layers, Pen } from "lucide-react";
 
 type SkillCategory = {
   name: string;
@@ -22,7 +22,7 @@ const skillCategories: SkillCategory[] = [
   },
   {
     name: "Machine Learning",
-    icon: Flask,
+    icon: FlaskConical,
     skills: ["NumPy", "Pandas", "Scikit-Learn", "PyTorch", "Feature Engineering", "LangChain", "RAG"]
   },
   {
